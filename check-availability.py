@@ -44,3 +44,4 @@ while True:
     else:
         #Course full. Check again
         print("COURSE FULL")
+    time.sleep(0.7)
