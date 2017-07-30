@@ -1,8 +1,10 @@
 import requests
 import time
-import config
 from bs4 import BeautifulSoup
 from twilio.rest import Client
+import sys
+sys.path.insert(0, '../config')
+import config
 
 account_sid = config.twilio['account_sid']
 auth_token = config.twilio['auth_token']
@@ -59,4 +61,4 @@ while True:
 
     #Course full. Check again
     print("COURSE FULL")
-    time.sleep(0)
+    time.sleep(10)

@@ -1,6 +1,8 @@
 import requests
 from lxml import html
 from bs4 import BeautifulSoup
+import sys
+sys.path.insert(0, '../config')
 import config
 
 USERNAME = config.credentials['userid']
@@ -11,9 +13,6 @@ URL = "https://quest.pecs.uwaterloo.ca/psc/SS/ACADEMIC/SA/c/SA_LEARNER_SERVICES.
 
 def main():
     session_requests = requests.session()
-
-    # Get login csrf token
-    result = session_requests.get(LOGIN_URL)
 
     # Create payload
     payload = {
