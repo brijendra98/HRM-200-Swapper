@@ -1,11 +1,21 @@
 import requests
-from bs4 import BeautifulSoup
 import time
+import config
+from bs4 import BeautifulSoup
+from twilio.rest import Client
+
+account_sid = config.twilio['account_sid']
+auth_token = config.twilio['auth_token']
+client = Client(account_sid, auth_token)
 
 while True:
     # getting the page for enrollment data
-    r = requests.get('http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?level=under&sess=1179&subject=HRM&cournum=200',timeout=5)
-
+    try:
+        r = requests.get('http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?level=under&sess=1179&subject=HRM&cournum=200',timeout=5)
+    except requests.exceptions.RequestException as e:
+        print e
+        time.sleep(60)
+	continue
     webpage = r.text
     soup = BeautifulSoup(webpage, 'html.parser')
     element = soup.findAll('td')
@@ -30,18 +40,23 @@ while True:
         else:
             return 0
 
+    def available(criteria):
+         message = client.messages.create(
+                     to = config.twilio['to'],
+                     from_ = config.twilio['from_'],
+                     body  = "Spot Empty in HRM 200 through "+criteria+" Criteria. ENROLL FAST!"
+                    )
+         print ("SPOT AVAILABLE. MESSAGE SENT")
+
 
     if enrl_cap > enrl_tot:
         if enrl_cap_two > enrl_tot_two:
-            #ENROLL
-		    print ("ENROLLED")
+             available("2nd Year Reserve")
+             break
         elif subs(enrl_cap_env,enrl_tot_env) + subs(enrl_cap_mat,enrl_tot_mat) + subs(enrl_cap_rec,enrl_tot_rec) + subs(enrl_cap_erg,enrl_tot_erg) < subs(enrl_cap,enrl_tot):
-		    #ENROLL
-		    print("ENROLLED")
-        else:
-            #Course full. Check again
-            print("COURSE FULL")
-    else:
-        #Course full. Check again
-        print("COURSE FULL")
-    time.sleep(0.7)
+             available("General")
+             break
+
+    #Course full. Check again
+    print("COURSE FULL")
+    time.sleep(0)
