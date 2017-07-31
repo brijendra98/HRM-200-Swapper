@@ -16,7 +16,7 @@ while True:
         r = requests.get('http://www.adm.uwaterloo.ca/cgi-bin/cgiwrap/infocour/salook.pl?level=under&sess=1179&subject=HRM&cournum=200',timeout=5)
     except requests.exceptions.RequestException as e:
         print e
-        time.sleep(60)
+        time.sleep(120)
 	continue
     webpage = r.text
     soup = BeautifulSoup(webpage, 'html.parser')
