@@ -1,14 +1,14 @@
 import requests
 import time
 from bs4 import BeautifulSoup
-from twilio.rest import Client
+#from twilio.rest import Client
 import sys
 sys.path.insert(0, '../config')
 import config
 
-account_sid = config.twilio['account_sid']
-auth_token = config.twilio['auth_token']
-client = Client(account_sid, auth_token)
+#account_sid = config.twilio['account_sid']
+#auth_token = config.twilio['auth_token']
+#client = Client(account_sid, auth_token)
 
 while True:
     # getting the page for enrollment data
@@ -43,11 +43,11 @@ while True:
             return 0
 
     def available(criteria):
-         message = client.messages.create(
-                     to = config.twilio['to'],
-                     from_ = config.twilio['from_'],
-                     body  = "Spot Empty in HRM 200 through "+criteria+" Criteria. ENROLL FAST!"
-                    )
+         #message = client.messages.create(
+        #             to = config.twilio['to'],
+            #         from_ = config.twilio['from_'],
+            #         body  = "Spot Empty in HRM 200 through "+criteria+" Criteria. ENROLL FAST!"
+            #        )
          print ("SPOT AVAILABLE. MESSAGE SENT")
 
 
