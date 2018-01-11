@@ -2,9 +2,9 @@ import requests
 import time
 from bs4 import BeautifulSoup
 #from twilio.rest import Client
-import sys
-sys.path.insert(0, '../config')
-import config
+#import sys
+#sys.path.insert(0, '../config')
+#import config
 
 #account_sid = config.twilio['account_sid']
 #auth_token = config.twilio['auth_token']
